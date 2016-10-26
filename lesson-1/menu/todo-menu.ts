@@ -1,77 +1,30 @@
-type menuList = {
-    title: string,
-    items?: menuList
-}[];
+type menuList ={title: string, items: string[]}[];
 
 let menuList: menuList = [
-    {
-        title: 'Животные',
-        items: [
-            {
-                title: 'Млекопитающие',
-                items: [
-                    {title: 'Коровы'},
-                    {title: 'Ослы'},
-                    {title: 'Собаки'},
-                    {title: 'Тигры'}
-                ]
-            },
-            {
-                title: 'Другие',
-                items: [
-                    {title: 'Змеи'},
-                    {title: 'Птицы'},
-                    {title: 'Ящерицы'}
-                ],
-            }
-        ]
-    },
-    {
-        title: 'Рыбы',
-        items: [
-            {
-                title: 'Аквариумные',
-                items: [
-                    {title: 'Гуппи'},
-                    {title: 'Скалярии'}
-                ]
-            },
-            {
-                title: 'Форель',
-                items: [
-                    {title: 'Морская форель'}
-                ]
-            },
-        ]
-    }
+    {title: 'JavaScript', items: ['React', 'Angular2', 'Cycle.js']},
+    {title: 'Dart', items: ['Flutter', 'Angular2', 'Polymer']},
 ];
 
 function generateMenu(list: menuList): string {
-    let z: string = `<ul>`;
-
-    for (let item of list) {
-        z += `<li>`;
-
-        if (item.items) {
-            z += `<a class="title">${item.title}</a>${generateMenu(item.items)}`;
-        } else {
-            z += `${item.title}`;
+    let z:string = `<ul>`;
+    for(let a of list){
+        z+=`<li><a class="title">${a.title}</a><ul>`
+        for(let item of a.items){
+          z+=`<li><a>${item}</a></li>`
         }
-
-        z += `</li>`;
+        z+=`</li></ul>`
     }
-
-    z += `</ul>`;
+    z+=`</ul>`;
     return z;
 }
 
-let navMenuList: HTMLDivElement = document.querySelector('.menu') as HTMLDivElement;
+let navMenuList:HTMLDivElement = document.querySelector('.menu') as HTMLDivElement;
 navMenuList.innerHTML = generateMenu(menuList);
-navMenuList.onclick = (ev: MouseEvent)=> {
+navMenuList.onclick =(ev:MouseEvent)=>{
     let el = <HTMLAnchorElement>ev.target;
     let classList = el.classList;
-    if (classList.contains('title')) {
-        let parentLi = el.parentNode as HTMLLIElement;
+    if(classList.contains('title')){
+        let parentLi =el.parentNode as HTMLLIElement;
         parentLi.classList.toggle('menu-open')
     }
 }
