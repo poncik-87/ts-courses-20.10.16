@@ -44,7 +44,7 @@ function generateMenu(list?: menuList): string {
 
     let htmlText:string = `<ul>`;
     for(let a of list){
-        let expandedClass = a.items ? `class="title"` : ``;
+        let expandedClass: string = a.items ? `class="title"` : ``;
         htmlText += `<li><a ${expandedClass}>${a.title}</a>`
         htmlText += generateMenu(a.items);
         htmlText += `</li>`
@@ -58,7 +58,7 @@ function generateMenu(list?: menuList): string {
 let navMenuList:HTMLDivElement = document.querySelector('.menu') as HTMLDivElement;
 navMenuList.innerHTML = generateMenu(menuList);
 navMenuList.onclick =(ev:MouseEvent)=>{
-    let el = <HTMLAnchorElement>ev.target;
+    let el = ev.target as HTMLAnchorElement;
     let classList = el.classList;
     if(classList.contains('title')){
         let parentLi =el.parentNode as HTMLLIElement;
