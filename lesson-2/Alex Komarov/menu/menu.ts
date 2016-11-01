@@ -59,7 +59,7 @@ class Menu implements IMenu {
         this.element = opt.element;
         this.menuList = opt.menuList;
         this.element.innerHTML = this.generateMenu(this.menuList);
-        this.element.addEventListener('click', this.clickHandler.bind(this))
+        this.element.addEventListener('click', (ev) => {this.clickHandler(ev);});
     }
 
     protected clickHandler(this: Menu, ev: MouseEvent) {
@@ -99,23 +99,23 @@ class Menu implements IMenu {
         return this.element;
     }
 
-    public readonly toggle: () => void = (function() {
+    public toggle(): void {
         if(this._selectedElement) {
             this._expand(this._selectedElement, 'toggle');
         }
-    }).bind(this)
+    }
 
-    public readonly close: () => void = (function() {
-        if(this._selectedElement) {
-            this._expand(this._selectedElement, 'close');
-        }
-    }).bind(this)
-
-    public readonly open: () => void = (function() {
+    public open(): void {
         if(this._selectedElement) {
             this._expand(this._selectedElement, 'open');
         }
-    }).bind(this)
+    }
+
+    public close(): void {
+        if(this._selectedElement) {
+            this._expand(this._selectedElement, 'close');
+        }
+    }
 }
 
 let element = document.querySelector('.menu') as HTMLElement;
@@ -126,6 +126,6 @@ let intMenu: IMenu = nav;
 let toggleElement = document.querySelector('.toggle-menu') as HTMLElement;
 let closeElement = document.querySelector('.close-menu') as HTMLElement;
 let openElement = document.querySelector('.open-menu') as HTMLElement;
-toggleElement.addEventListener('click', intMenu.toggle);
-closeElement.addEventListener('click', intMenu.close);
-openElement.addEventListener('click', intMenu.open);
+toggleElement.addEventListener('click', () => {intMenu.toggle();});
+closeElement.addEventListener('click', () => {intMenu.close();});
+openElement.addEventListener('click', () => {intMenu.open();});
